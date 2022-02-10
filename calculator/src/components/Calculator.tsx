@@ -21,66 +21,68 @@ const Display = styled.div`
   text-align: right;
 `;
 
-const Calculator: React.FC<{}> = () => {
-  const [keyValue, setKeyValue] = useState<any>([]);
-  console.log(keyValue);
-  const handleDisplay = (label: string) => {
-    if (label === "AC") {
-      setKeyValue([]);
-    } else if (typeof parseInt(label) === "number") {
-      setKeyValue([...keyValue, parseInt(label)]);
-    } else if (label === "+") {
-      if (keyValue === []) {
-        return;
-      } else {
-        return;
-      }
+const Calculator: React.FC = () => {
+  const [state1, setState1] = useState<string[]>([]);
+  const [state2, setState2] = useState<string[]>([]);
+  const [operation, setOperation] = useState<string>();
+  const [result, setResult] = useState<number>();
+
+  const handleInput = (label: string) =>
+    operation ? setState2([...state2, label]) : setState1([...state1, label]);
+
+  const showState = () => {
+    if (operation && state2.length !== 0 && !result) {
+      return state2;
+    } else if (!result) {
+      return state1;
     }
+
+    return result;
   };
 
-  /* Podría hacer una función para cada botón por ejemplo handleAc 
-  
-    const handleAc = (label: string) => {
-      if (label === "AC") {
-        setKeyValue([]);
-      }
-    }; 
-  */
+  const operate = () => {
+    const st1 = parseInt(state1.reduce((acc, x) => `${acc}${x}`));
+    const st2 = parseInt(state2.reduce((acc, x) => `${acc}${x}`));
+
+    if (operation === "+") {
+      setResult(st1 + st2);
+    } else if (operation === "-") {
+      setResult(st1 - st2);
+    } else if (operation === "") {
+    } else if (operation === "") {
+    }
+  };
 
   return (
     <Container>
       <Grid>
-        <Display>{keyValue}</Display>
+        <Display>{showState()}</Display>
         <Button
           label="AC"
           position={[0, 1]}
           width={2}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => {}}
         />
         <Button
           label="Ups"
           position={[2, 1]}
           width={2}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => {}}
         />
         <Button
           label="-"
           position={[3, 2]}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => setOperation(label)}
         />
-        <Button
-          label="+"
-          position={[3, 3]}
-          handleDisplay={(label) => handleDisplay(label)}
-        />
+        <Button label="+" position={[3, 3]} handleDisplay={setOperation} />
         <Button
           label="="
           position={[3, 4]}
           height={2}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={operate}
         />
         <Button
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={handleInput}
           type={ButtonType.Number}
           label="9"
           position={[2, 2]}
@@ -89,52 +91,52 @@ const Calculator: React.FC<{}> = () => {
           type={ButtonType.Number}
           label="8"
           position={[1, 2]}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => handleInput(label)}
         />
         <Button
           type={ButtonType.Number}
           label="7"
           position={[0, 2]}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => handleInput(label)}
         />
         <Button
           type={ButtonType.Number}
           label="6"
           position={[2, 3]}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => handleInput(label)}
         />
         <Button
           type={ButtonType.Number}
           label="5"
           position={[1, 3]}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => handleInput(label)}
         />
         <Button
           type={ButtonType.Number}
           label="4"
           position={[0, 3]}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => handleInput(label)}
         />
         <Button
           type={ButtonType.Number}
           label="3"
           position={[2, 4]}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => handleInput(label)}
         />
         <Button
           type={ButtonType.Number}
           label="2"
           position={[1, 4]}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => handleInput(label)}
         />
         <Button
           type={ButtonType.Number}
           label="1"
           position={[0, 4]}
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => handleInput(label)}
         />
         <Button
-          handleDisplay={(label) => handleDisplay(label)}
+          handleDisplay={(label) => handleInput(label)}
           type={ButtonType.Number}
           label="0"
           position={[0, 5]}

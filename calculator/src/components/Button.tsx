@@ -33,6 +33,7 @@ const Button: React.FC<Props> = ({
   type = ButtonType.Operation,
 }) => {
   const [inputValue, setInputValue] = useState(label);
+
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     console.log(inputValue);
   };
