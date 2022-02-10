@@ -45,12 +45,21 @@ const Calculator: React.FC = () => {
     const st2 = parseInt(state2.reduce((acc, x) => `${acc}${x}`));
 
     if (operation === "+") {
-      setResult(st1 + st2);
+      if (state2) setState2([]);
+      result ? setResult(result + st2) : setResult(st1 + st2);
     } else if (operation === "-") {
-      setResult(st1 - st2);
+      if (state2) setState2([]);
+      result ? setResult(result - st2) : setResult(st1 - st2);
     } else if (operation === "") {
     } else if (operation === "") {
     }
+  };
+
+  const resetStates = () => {
+    setState1([]);
+    setState2([]);
+    setOperation("");
+    setResult(0);
   };
 
   return (
@@ -61,7 +70,7 @@ const Calculator: React.FC = () => {
           label="AC"
           position={[0, 1]}
           width={2}
-          handleDisplay={(label) => {}}
+          handleDisplay={resetStates}
         />
         <Button
           label="Ups"
