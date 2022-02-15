@@ -31,12 +31,11 @@ const Calculator: React.FC = () => {
     operation ? setState2([...state2, label]) : setState1([...state1, label]);
 
   const showState = () => {
-    if (operation && state2.length !== 0 && !result) {
+    if (operation && state2.length !== 0) {
       return state2;
     } else if (!result) {
       return state1;
     }
-
     return result;
   };
 
@@ -45,12 +44,25 @@ const Calculator: React.FC = () => {
     const st2 = parseInt(state2.reduce((acc, x) => `${acc}${x}`));
 
     if (operation === "+") {
-      setResult(st1 + st2);
+      if (state2) setState2([]);
+      result ? setResult(result + st2) : setResult(st1 + st2);
     } else if (operation === "-") {
-      setResult(st1 - st2);
-    } else if (operation === "") {
-    } else if (operation === "") {
+      if (state2) setState2([]);
+      result ? setResult(result - st2) : setResult(st1 - st2);
+    } else if (operation === "*") {
+      if (state2) setState2([]);
+      result ? setResult(result * st2) : setResult(st1 * st2);
+    } else if (operation === "/") {
+      if (state2) setState2([]);
+      result ? setResult(result / st2) : setResult(st1 / st2);
     }
+  };
+
+  const resetStates = () => {
+    setState1([]);
+    setState2([]);
+    setOperation("");
+    setResult(0);
   };
 
   return (
@@ -61,14 +73,22 @@ const Calculator: React.FC = () => {
           label="AC"
           position={[0, 1]}
           width={2}
-          handleDisplay={(label) => {}}
+          handleDisplay={resetStates}
         />
         <Button
-          label="Ups"
+          label="/"
           position={[2, 1]}
-          width={2}
-          handleDisplay={(label) => {}}
+          width={1}
+          handleDisplay={setOperation}
         />
+
+        <Button
+          label="*"
+          position={[3, 1]}
+          width={1}
+          handleDisplay={setOperation}
+        />
+
         <Button
           label="-"
           position={[3, 2]}
