@@ -34,10 +34,6 @@ const Button: React.FC<Props> = ({
 }) => {
   const [inputValue, setInputValue] = useState(label);
 
-  const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
-    console.log(inputValue);
-  };
-
   if (display) {
     display = inputValue;
   }

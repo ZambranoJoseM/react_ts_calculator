@@ -31,12 +31,11 @@ const Calculator: React.FC = () => {
     operation ? setState2([...state2, label]) : setState1([...state1, label]);
 
   const showState = () => {
-    if (operation && state2.length !== 0 && !result) {
+    if (operation && state2.length !== 0) {
       return state2;
     } else if (!result) {
       return state1;
     }
-
     return result;
   };
 
@@ -50,8 +49,12 @@ const Calculator: React.FC = () => {
     } else if (operation === "-") {
       if (state2) setState2([]);
       result ? setResult(result - st2) : setResult(st1 - st2);
-    } else if (operation === "") {
-    } else if (operation === "") {
+    } else if (operation === "*") {
+      if (state2) setState2([]);
+      result ? setResult(result * st2) : setResult(st1 * st2);
+    } else if (operation === "/") {
+      if (state2) setState2([]);
+      result ? setResult(result / st2) : setResult(st1 / st2);
     }
   };
 
@@ -73,11 +76,19 @@ const Calculator: React.FC = () => {
           handleDisplay={resetStates}
         />
         <Button
-          label="Ups"
+          label="/"
           position={[2, 1]}
-          width={2}
-          handleDisplay={(label) => {}}
+          width={1}
+          handleDisplay={setOperation}
         />
+
+        <Button
+          label="*"
+          position={[3, 1]}
+          width={1}
+          handleDisplay={setOperation}
+        />
+
         <Button
           label="-"
           position={[3, 2]}
